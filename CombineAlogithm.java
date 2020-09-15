@@ -48,13 +48,14 @@ public class CombineAlogithm {
 
    
     public static void main(String args[]){  
+	    //判断null是Object还是Character
         Test t = new Test();  
         t.myMethod(null);  
-        System.out.println("============================");
+        System.out.println("============Random Test Begin===========");
 		int[] aaa = getRandomIntWithoutReduplicate(1,33,6);
 		for(int i=0;i<aaa.length;i++){
 			System.out.println(aaa[i]);
 		}
-		System.out.println("value");
+        System.out.println("============Random Test End=============");
     }  
 }
