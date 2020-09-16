@@ -1,3 +1,5 @@
+package main;
+
 public class CombineAlogithm {  
      
 	public void myMethod(Character c) {  
