@@ -18,8 +18,9 @@ public abstract class DubboDirectConnetion {
 
 	protected Logger log = LoggerFactory.getLogger(getClass());
 
-	private static Object lock = new Object();
-	
+	private static final LoadingCache<String, Object> keyLocks = CacheBuilder.newBuilder()
+	        .expireAfterAccess(30, TimeUnit.SECONDS) // max lock time ever expected
+	        .build(CacheLoader.from(Object::new));	
 	
 	private String getJoinUrl(String urlport,String className){
 		String[] urlports = StringUtils.split(urlport,";");
@@ -49,7 +50,7 @@ public abstract class DubboDirectConnetion {
         ReferenceConfigCache cache = ReferenceConfigCache.getCache(); 
         T t = cache.get(rc);
         if(null==t){
-			synchronized(lock){
+            synchronized(keyLocks.getUnchecked(className)) {
         	   cache.destroy(rc);
 			}
         	return cache.get(rc);
